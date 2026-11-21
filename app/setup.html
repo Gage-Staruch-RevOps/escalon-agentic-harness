@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; media-src 'self'">
+<title>Agentic Harness setup</title>
+<style>
+:root{--bg:#1C2960;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--ink:#F3F5FB;--muted:#AEB8D6;--blue:#8EA9DB;--gold:#FFC000;--bad:#FF8A80;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;--ease-out:cubic-bezier(.23,1,.32,1)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--font);-webkit-font-smoothing:antialiased;display:grid;place-items:center;padding:56px 16px 32px;-webkit-app-region:drag}
+main{width:min(560px,100%);-webkit-app-region:no-drag}
+h1{font-size:22px;font-weight:650;margin:0 0 6px;letter-spacing:-.01em}
+p.lead{color:var(--muted);margin:0 0 24px}
+form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px}
+label{display:grid;gap:6px;font-size:12px;font-weight:600;color:var(--muted)}
+label .req{color:var(--gold);font-weight:400;margin-left:4px}
+input[type=text]{font:inherit;color:var(--ink);background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:8px;padding:9px 11px;outline:none;transition:border-color 150ms var(--ease-out)}
+input[type=text]:focus-visible{border-color:var(--blue)}
+input::placeholder{color:rgba(174,184,214,.55)}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:var(--ink);font-size:13px}
+.check input{margin-top:3px;accent-color:var(--blue)}
+.check small{display:block;color:var(--muted)}
+button{font:600 14px var(--font);background:var(--blue);color:#081027;border:0;border-radius:9px;padding:11px 16px;cursor:pointer;transition:transform 160ms var(--ease-out),opacity 160ms}
+button:active{transform:scale(.97)}
+button:disabled{opacity:.5;cursor:default}
+.err{color:var(--bad);font-size:13px;min-height:1em}
+pre{margin:0;white-space:pre-wrap;font:12px/1.5 ui-monospace,Menlo,monospace;color:var(--muted);max-height:160px;overflow:auto}
+.privacy{font-size:12px;color:var(--muted);margin-top:14px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Who is Claude working for?</h1>
+  <p class="lead">Claude Code will use this in every session on this computer: your role, your team and how you work. You can change it later from Harness, Edit my profile.</p>
+  <form id="f" novalidate>
+    <div id="fields"></div>
+    <label class="check"><input type="checkbox" id="lib"><span>Download the public skill library now<small>About 700 MB of best-practice skills from public GitHub repos, license-checked. Runs in the background for several minutes.</small></span></label>
+    <div class="err" id="err" role="alert"></div>
+    <button id="go" type="submit">Set up my harness</button>
+    <pre id="log" hidden></pre>
+  </form>
+  <p class="privacy">Your answers stay on this computer in ~/.claude/harness/user.json. Nothing is sent anywhere.</p>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+let FIELDS = [];
+(async () => {
+  const { fields, saved } = await window.harness.setupFields();
+  FIELDS = fields;
+  $('#fields').innerHTML = fields.map((f) => `<label><span>${esc(f.q)}${f.required ? '<span class="req">required</span>' : ''}</span><input type="text" id="f_${f.key}" value="${esc(saved[f.key] ?? f.def ?? '')}" placeholder="${esc(f.ph || '')}" autocomplete="off" spellcheck="false"></label>`).join('');
+  $('#fields').style.cssText = 'display:grid;gap:14px';
+  $(`#f_${fields[0].key}`).focus();
+})();
+window.addEventListener('harness:setup-log', (e) => { const l = $('#log'); l.hidden = false; l.textContent += e.detail + '\n'; l.scrollTop = l.scrollHeight; });
+$('#f').addEventListener('submit', async (e) => {
+  e.preventDefault(); $('#err').textContent = '';
+  const user = Object.fromEntries(FIELDS.map((f) => [f.key, $(`#f_${f.key}`).value.trim()]));
+  const miss = FIELDS.find((f) => f.required && !user[f.key]);
+  if (miss) { $('#err').textContent = `${miss.q} is required.`; $(`#f_${miss.key}`).focus(); return; }
+  $('#go').disabled = true; $('#go').textContent = 'Setting up...';
+  const r = await window.harness.install(user, $('#lib').checked);
+  if (!r.ok) { $('#err').textContent = r.error; $('#go').disabled = false; $('#go').textContent = 'Set up my harness'; }
+});
+</script>
+</body>
+</html>

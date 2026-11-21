@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+# generated per person, never committed
+app/web/index.html
+app/web/.history/
+app/web/.alerts.jsonl
+app/web/.settings.json
+app/web/.names.json
+app/web/.usage-cache.json
+scripts/blocklist.local.txt

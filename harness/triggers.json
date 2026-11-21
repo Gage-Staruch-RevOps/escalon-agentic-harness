@@ -1,0 +1,307 @@
+{
+  "_doc": "Project-aware routing. When a prompt matches `match` (case-insensitive regex), the listed skills are pinned to the top of the <harness> block and the notes are named. Skills are referenced by native name or skill name. Notes are file names in notesDir. Example project rule: { \"match\": \"\\\\b(payroll portal|payroll-portal)\\\\b\", \"notes\": [\"payroll-portal.md\"] } Company rules live here in the harness repo (change them through a pull request). The last rule is a PLACEHOLDER example for a company chain: replace its words, skill, note and chain, or delete it. cwdNotes maps a folder fragment of the working directory to notes, for example \"Desktop/my-project\": [\"my-project.md\"].",
+  "notesDir": "~/.claude/harness/notes",
+  "rules": [
+    {
+      "match": "\\b(retro(spective)?|post[- ]?mortem|what went wrong|why did (that|it|this) fail|audit claude|don'?t do that again|that was wrong)\\b",
+      "skills": [
+        "harness-retro"
+      ],
+      "notes": [
+        "lessons.md"
+      ],
+      "chain": "C10"
+    },
+    {
+      "match": "\\b(make|write|create|update|change|improve|fix) (a |my |the |this )?skills?\\b|\\bskill (for|that)\\b|\\bturn (this|that|it) into a skill\\b",
+      "skills": [
+        "harness",
+        "skill-creator"
+      ],
+      "chain": "C9"
+    },
+    {
+      "match": "\\b((write|draft|send|compose|answer|reply|respond)( to)? (an? |the |this |that |my )?(email|e-mail|reply|response|message|note|follow[- ]?up)|draft a reply|reply to (this|that|him|her|them)|follow up with)\\b",
+      "skills": [
+        "humanizer"
+      ],
+      "chain": "C4"
+    },
+    {
+      "match": "\\b(chart|graph|plot|visuali[sz]e|dashboard)\\b",
+      "skills": [
+        "dataviz"
+      ],
+      "chain": "C2"
+    },
+    {
+      "match": "\\b(refresh the|monthly report|weekly report|quarterly report|update the deck|recurring report)\\b",
+      "skills": [],
+      "chain": "C3"
+    },
+    {
+      "match": "\\b(powerpoint|pptx|slides?|deck)\\b",
+      "skills": [
+        "pptx"
+      ],
+      "chain": "C5"
+    },
+    {
+      "match": "\\b(spreadsheet|excel|xlsx|csv)\\b",
+      "skills": [
+        "xlsx"
+      ],
+      "chain": "C5"
+    },
+    {
+      "match": "\\b(word doc(ument)?|docx|pdf|write (a |the )?(doc|document|memo|proposal|policy|sop|guide))\\b",
+      "skills": [
+        "docs"
+      ],
+      "chain": "C5"
+    },
+    {
+      "match": "\\b(research|look into|deep dive|compare (vendors|tools|options)|what are the options for|market scan)\\b",
+      "skills": [
+        "deep-research"
+      ],
+      "chain": "C6"
+    },
+    {
+      "match": "\\b(fix the bug|bug|broken|crash\\w*|stack ?trace|refactor|add a feature|build (a|an|the) (feature|script|tool|api|integration|app))\\b",
+      "skills": [
+        "writing-plans",
+        "systematic-debugging",
+        "verification-before-completion"
+      ],
+      "chain": "C7"
+    },
+    {
+      "match": "\\b(agentic harness|harness app|the brain('s)? (ui|app|window|graph)|node map|neuron\\w*|vertices|notification sounds?)\\b",
+      "skills": [
+        "design-engineering"
+      ],
+      "notes": [
+        "harness-app.md"
+      ],
+      "chain": "C8"
+    },
+    {
+      "match": "\\b(polish|restyle|redesign|landing page|make it look|ui|ux|component|web ?page)\\b",
+      "skills": [
+        "frontend-design",
+        "design-engineering"
+      ],
+      "chain": "C8"
+    },
+    {
+      "match": "\\b(how many|how much|what'?s our|how is .{1,30} doing|bookings?|revenue|forecast)\\b",
+      "skills": [],
+      "chain": "C1"
+    },
+    {
+      "match": "\\b(animat\\w*|motion|gesture\\w*|swip\\w*|drag\\w*|sheet|spring\\w*|transition\\w*|fluid|easing|micro-?interaction\\w*|feel(s)? (native|janky|off|cheap))\\b",
+      "skills": [
+        "apple-design",
+        "animate"
+      ]
+    },
+    {
+      "match": "\\b(ui|ux|design|redesign|restyle|landing|homepage|web ?page|screen|layout|css|styl(e|ing)|component|dashboard|mock-?up|polish)\\b",
+      "skills": []
+    },
+    {
+      "match": "\\b(skills?|harness|SKILL\\.md|agent setup|claude\\.md)\\b",
+      "skills": [
+        "harness"
+      ]
+    },
+    {
+      "match": "\\b(tests?|testing|test suite|e2e|end[- ]to[- ]end|smoke|load test)\\b[\\s\\S]{0,60}\\b(live|prod|production|staging)\\b|\\b(live|prod|production)\\b[\\s\\S]{0,60}\\b(tests?|testing|test suite|e2e|end[- ]to[- ]end)\\b",
+      "skills": [
+        "verification-before-completion"
+      ]
+    },
+    {
+      "match": "\\b(debug\\w*|bug|broken|crash\\w*|error|exception|stack ?trace|500s?|fails?|failing|regression|why (is|does|did))\\b",
+      "skills": [
+        "systematic-debugging"
+      ]
+    },
+    {
+      "match": "\\b(research|investigate|compare|comparison|deep dive|look into|market (scan|research)|alternatives)\\b",
+      "skills": [
+        "deep-research"
+      ]
+    },
+    {
+      "match": "\\b(security|vulnerabilit\\w*|pentest|exploit|secure|hardening|owasp|audit (this|the) (repo|code))\\b",
+      "skills": []
+    },
+    {
+      "match": "\\b(review|code review|pr review|pull request)\\b",
+      "skills": []
+    },
+    {
+      "match": "\\b(mcp server|mcp tool|model context protocol)\\b",
+      "skills": [
+        "mcp-builder"
+      ]
+    },
+    {
+      "match": "\\b(copy|headline|tagline|landing copy|email copy|blog post|newsletter|social post|ad copy)\\b",
+      "skills": []
+    },
+    {
+      "match": "\\b(swift|swiftui|ios|iphone app|xcode|liquid glass|watchos|visionos)\\b",
+      "skills": []
+    },
+    {
+      "match": "\\b(spec|prd|roadmap|user stories|requirements)\\b",
+      "skills": []
+    },
+    {
+      "match": "\\b(sound(s|ing)? (less )?(like )?(an )?ai|ai[- ]?(sounding|written|slop|generated|tells)|de-?ai|humani[sz]e|less robotic|sound (more )?human|slop)\\b",
+      "skills": [
+        "humanizer"
+      ]
+    },
+    {
+      "match": "\\b(PLACEHOLDER-company-term|PLACEHOLDER-system-name)\\b",
+      "skills": [
+        "PLACEHOLDER-company-skill"
+      ],
+      "notes": [
+        "PLACEHOLDER-project.md"
+      ],
+      "chain": "C20"
+    }
+  ],
+  "exclusive": {
+    "_doc": "Technology families. If the prompt names one member, skills named after a different member are pushed down. If it names none, skills named after a member are pushed down a little (they are niche).",
+    "groups": [
+      {
+        "members": [
+          "cloudflare",
+          "vercel",
+          "netlify",
+          "aws",
+          "azure",
+          "gcp",
+          "firebase",
+          "heroku",
+          "railway",
+          "render",
+          "fly"
+        ],
+        "unmentioned": 0.8
+      },
+      {
+        "members": [
+          "react",
+          "vue",
+          "svelte",
+          "angular",
+          "solid",
+          "nextjs",
+          "nuxt",
+          "remix",
+          "astro",
+          "qwik"
+        ],
+        "unmentioned": 0.85
+      },
+      {
+        "members": [
+          "django",
+          "rails",
+          "laravel",
+          "spring",
+          "fastapi",
+          "flask",
+          "express",
+          "nestjs",
+          "dotnet",
+          "phoenix"
+        ],
+        "unmentioned": 0.6
+      },
+      {
+        "members": [
+          "swiftui",
+          "swift",
+          "kotlin",
+          "android",
+          "flutter",
+          "expo",
+          "react-native",
+          "jetpack"
+        ],
+        "unmentioned": 0.75
+      },
+      {
+        "members": [
+          "solana",
+          "substrate",
+          "cairo",
+          "ton",
+          "solidity",
+          "ethereum",
+          "algorand",
+          "cosmos",
+          "move"
+        ],
+        "unmentioned": 0.35
+      },
+      {
+        "members": [
+          "postgres",
+          "postgresql",
+          "mysql",
+          "mongodb",
+          "redis",
+          "sqlite",
+          "clickhouse",
+          "qdrant",
+          "neon",
+          "duckdb",
+          "elasticsearch"
+        ],
+        "unmentioned": 0.8
+      },
+      {
+        "members": [
+          "python",
+          "java",
+          "rust",
+          "golang",
+          "go",
+          "ruby",
+          "php",
+          "csharp",
+          "kotlin",
+          "scala",
+          "elixir"
+        ],
+        "unmentioned": 0.85
+      },
+      {
+        "members": [
+          "zoom",
+          "teams",
+          "webex",
+          "salesforce",
+          "hubspot",
+          "dynamics",
+          "sap",
+          "servicenow",
+          "jira",
+          "confluence"
+        ],
+        "unmentioned": 0.6
+      }
+    ]
+  },
+  "cwdNotes": {},
+  "projectPhrases": []
+}

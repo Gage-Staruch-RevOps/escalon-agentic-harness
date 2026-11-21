@@ -1,0 +1,633 @@
+{
+  "_favorites_doc": "Skill names (or name@owner/repo when several skills share a name) that rank higher in every match. Add what you like, remove what keeps showing up unwanted, then run build.mjs index.",
+  "_doc": "Where the harness gets its skills. Edit, then run: node ~/.claude/harness/bin/build.mjs all. Tiers: anthropic, author, vendor (official repo of the tool's maker), community. Repos left out on purpose are listed in SOURCES-SKIPPED.md.",
+  "cache": "~/.cache/claude-harness/src",
+  "promote": {
+    "_doc": "Library skills copied into ~/.claude/skills so they register natively with the Skill tool. Every native skill costs context in every session, so this is limited to the UI chain (C17) core. Others stay reachable through the router.",
+    "sources": [],
+    "skills": [
+      "design-engineering"
+    ]
+  },
+  "favorites": [
+    "humanizer",
+    "stop-slop",
+    "anti-slop-writing",
+    "apple-design",
+    "design-engineering",
+    "better-typography",
+    "better-colors",
+    "better-ui",
+    "frontend-design",
+    "systematic-debugging",
+    "verification-before-completion",
+    "writing-plans@obra/superpowers",
+    "planning-with-files",
+    "ce-plan",
+    "ce-code-review"
+  ],
+  "overrides": {
+    "writing-plans": "engineering",
+    "executing-plans": "engineering",
+    "verification-before-completion": "engineering",
+    "webapp-testing": "testing-qa",
+    "write-swift": "mobile-apple",
+    "animate-expo": "mobile-apple"
+  },
+  "local": [
+    {
+      "id": "claude-ai",
+      "glob": "~/.claude/skills/synced/*",
+      "layer": "20-account",
+      "group": "claude-ai",
+      "tier": "account",
+      "native": "anthropic-skills:{name}"
+    },
+    {
+      "id": "account-plugins",
+      "glob": "~/.claude/plugins/synced/*",
+      "layer": "20-account",
+      "group": "plugins/{plugin}",
+      "tier": "account",
+      "native": "{plugin}:{name}"
+    },
+    {
+      "id": "claude-plugins-official",
+      "glob": "~/.claude/plugins/marketplaces/claude-plugins-official",
+      "layer": "20-account",
+      "group": "marketplace/{plugin}",
+      "tier": "anthropic"
+    }
+  ],
+  "git": [
+    {
+      "repo": "anthropics/skills",
+      "tier": "anthropic"
+    },
+    {
+      "repo": "anthropics/knowledge-work-plugins",
+      "tier": "anthropic"
+    },
+    {
+      "repo": "emilkowalski/skills",
+      "tier": "author",
+      "category": "design-ui",
+      "extras": {
+        "design-engineering": [
+          "ui-cheatsheet.md",
+          "performance-cheatsheet.md"
+        ]
+      },
+      "rename": {
+        "emil-design-eng": "design-engineering"
+      }
+    },
+    {
+      "repo": "vercel-labs/agent-skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "supabase/agent-skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "cloudflare/skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "stripe/ai",
+      "tier": "vendor",
+      "sparse": [
+        "providers/claude/plugin/skills"
+      ]
+    },
+    {
+      "repo": "expo/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "remotion-dev/skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "getsentry/skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "hashicorp/agent-skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "callstackincubator/agent-skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "shadcn-ui/ui",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "greensock/gsap-skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "figma/mcp-server-guide",
+      "tier": "vendor",
+      "sparse": [
+        "skills",
+        "skills-figquery"
+      ]
+    },
+    {
+      "repo": "huggingface/skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "trailofbits/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "openai/skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "microsoft/playwright-cli",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "google-labs-code/stitch-skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "better-auth/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "resend/resend-skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "firecrawl/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "browserbase/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "makenotion/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "WordPress/agent-skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "Shopify/shopify-ai-toolkit",
+      "tier": "vendor",
+      "exclude": "(^|/)deprecated(/|$)"
+    },
+    {
+      "repo": "coderabbitai/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "prisma/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "fal-ai-community/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "obra/superpowers",
+      "tier": "community"
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "addyosmani/web-quality-skills",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "mattpocock/skills",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "wshobson/agents",
+      "tier": "community",
+      "sparse": [
+        "plugins"
+      ]
+    },
+    {
+      "repo": "coreyhaines31/marketingskills",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "phuryn/pm-skills",
+      "tier": "community"
+    },
+    {
+      "repo": "muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "K-Dense-AI/scientific-agent-skills",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "garrytan/gstack",
+      "tier": "community"
+    },
+    {
+      "repo": "github/awesome-copilot",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "ComposioHQ/awesome-claude-skills",
+      "tier": "community",
+      "exclude": "^composio-skills/"
+    },
+    {
+      "repo": "jeffallan/claude-skills",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "ibelick/ui-skills",
+      "tier": "community",
+      "category": "design-ui",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "pbakaus/impeccable",
+      "tier": "community",
+      "category": "design-ui",
+      "sparse": [
+        ".claude/skills"
+      ]
+    },
+    {
+      "repo": "Leonxlnx/taste-skill",
+      "tier": "community",
+      "category": "design-ui",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "tier": "community",
+      "category": "design-ui",
+      "paths": [
+        ".claude/skills"
+      ]
+    },
+    {
+      "repo": "Dammyjay93/interface-design",
+      "tier": "community",
+      "category": "design-ui",
+      "sparse": [
+        ".claude/skills"
+      ]
+    },
+    {
+      "repo": "raphaelsalaja/userinterface-wiki",
+      "tier": "community",
+      "category": "design-ui"
+    },
+    {
+      "repo": "meodai/skill.color-expert",
+      "tier": "community",
+      "category": "design-ui"
+    },
+    {
+      "repo": "dickwu/apple-design-skill",
+      "tier": "community",
+      "category": "design-ui"
+    },
+    {
+      "repo": "raintree-technology/hig-doctor",
+      "tier": "community",
+      "category": "design-ui"
+    },
+    {
+      "repo": "CloudAI-X/threejs-skills",
+      "tier": "community",
+      "category": "media-creative"
+    },
+    {
+      "repo": "Dimillian/Skills",
+      "tier": "community",
+      "category": "mobile-apple"
+    },
+    {
+      "repo": "AvdLee/SwiftUI-Agent-Skill",
+      "tier": "community",
+      "category": "mobile-apple"
+    },
+    {
+      "repo": "twostraws/SwiftUI-Agent-Skill",
+      "tier": "community",
+      "category": "mobile-apple"
+    },
+    {
+      "repo": "CharlesWiltgen/Axiom",
+      "tier": "community",
+      "category": "mobile-apple",
+      "sparse": [
+        "axiom-codex/skills"
+      ]
+    },
+    {
+      "repo": "Prisma-Labs-Dev/apple-skills",
+      "tier": "community",
+      "category": "mobile-apple",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "conorluddy/ios-simulator-skill",
+      "tier": "community",
+      "category": "mobile-apple"
+    },
+    {
+      "repo": "blader/humanizer",
+      "tier": "community",
+      "category": "writing-comms"
+    },
+    {
+      "repo": "hardikpandya/stop-slop",
+      "tier": "community",
+      "category": "writing-comms"
+    },
+    {
+      "repo": "adewale/anti-slop-writing",
+      "tier": "community",
+      "category": "writing-comms",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "obra/the-elements-of-style",
+      "tier": "community",
+      "category": "writing-comms"
+    },
+    {
+      "repo": "TheCraigHewitt/skills",
+      "tier": "community"
+    },
+    {
+      "repo": "jezweb/claude-skills",
+      "tier": "community",
+      "sparse": [
+        "plugins"
+      ]
+    },
+    {
+      "repo": "ericosiu/ai-marketing-skills",
+      "tier": "community"
+    },
+    {
+      "repo": "garrettjsmith/localseoskills",
+      "tier": "community",
+      "category": "marketing-growth",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "AgriciDaniel/claude-seo",
+      "tier": "community",
+      "category": "marketing-growth",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "AgriciDaniel/claude-ads",
+      "tier": "community",
+      "category": "marketing-growth",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "twilio/ai",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "VapiAI/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "elevenlabs/skills",
+      "tier": "vendor"
+    },
+    {
+      "repo": "livekit/agent-skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "pipecat-ai/skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "cloudflare/security-audit-skill",
+      "tier": "vendor",
+      "category": "security",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "secondsky/claude-skills",
+      "tier": "community",
+      "sparse": [
+        "plugins"
+      ],
+      "include": "cloudflare"
+    },
+    {
+      "repo": "OthmanAdi/planning-with-files",
+      "tier": "community",
+      "category": "engineering",
+      "sparse": [
+        "skills/planning-with-files"
+      ]
+    },
+    {
+      "repo": "EveryInc/compound-engineering-plugin",
+      "tier": "community",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "n8n-io/skills",
+      "tier": "vendor",
+      "category": "automation-integrations",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "czlonkowski/n8n-skills",
+      "tier": "community",
+      "category": "automation-integrations",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "mailtrap/mailtrap-skills",
+      "tier": "vendor",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "CosmoBlk/email-marketing-bible",
+      "tier": "community",
+      "category": "marketing-growth"
+    },
+    {
+      "repo": "anthropics/financial-services",
+      "tier": "anthropic"
+    },
+    {
+      "repo": "EveryInc/charlie-cfo-skill",
+      "tier": "community",
+      "category": "business-ops"
+    },
+    {
+      "repo": "google-deepmind/science-skills",
+      "tier": "vendor",
+      "category": "research-science",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "jakubkrehel/skills",
+      "tier": "community",
+      "category": "design-ui",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "Owl-Listener/designer-skills",
+      "tier": "community",
+      "category": "design-ui"
+    },
+    {
+      "repo": "ehmo/platform-design-skills",
+      "tier": "community",
+      "category": "design-ui",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "mobbin/skills",
+      "tier": "vendor",
+      "category": "design-ui",
+      "sparse": [
+        "skills"
+      ]
+    },
+    {
+      "repo": "zarazhangrui/frontend-slides",
+      "tier": "community",
+      "category": "documents-office"
+    }
+  ],
+  "licensePolicy": {
+    "_doc": "Commercial-use gate applied by build.mjs import (bin/license-policy.mjs). Blocks non-commercial licenses, vendor-proprietary copies (e.g. Anthropic all-rights-reserved skills, which are used natively instead) and skills with no license. trustedSources: sources known to be licensed although their skill folders carry no license file.",
+    "trustedSources": {
+      "account-plugins": "plugins installed on the company Claude account"
+    }
+  },
+  "router": {
+    "_doc": "skill-router's chains file; build.mjs index reads it so the hook can name the chain to run.",
+    "chainsFile": "{{REPO}}/skills/00-router/skill-router/references/chains.md"
+  },
+  "skillTree": {
+    "_doc": "The company skill tree in the harness repo, indexed as company skills (tier mine) and routed by skill-router. Set by setup.",
+    "root": "{{REPO}}/skills",
+    "skip": [
+      "_archive",
+      "90-templates"
+    ]
+  },
+  "brain": {
+    "_doc": "After build.mjs index, rebuild the Agentic Harness app graph so it matches the harness.",
+    "script": "{{REPO}}/app/web/build.mjs"
+  }
+}

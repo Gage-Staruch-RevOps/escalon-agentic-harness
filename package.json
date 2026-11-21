@@ -1,0 +1,32 @@
+{
+  "name": "escalon-agentic-harness",
+  "productName": "Agentic Harness",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Company agentic harness for Claude Code: routing, chains, a shared skill tree managed in GitHub, and a live desktop app.",
+  "main": "app/main.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "setup": "node setup/setup.mjs",
+    "start": "electron .",
+    "web": "node app/web/server.mjs",
+    "update": "node setup/update.mjs",
+    "library": "node setup/library.mjs",
+    "uninstall": "node setup/uninstall.mjs",
+    "test": "node harness/bin/test-route.mjs",
+    "lint": "node harness/bin/lint-skills.mjs",
+    "check": "node scripts/check-repo.mjs",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.18.1"
+  },
+  "build": {
+    "appId": "services.escalon.agentic-harness",
+    "productName": "Agentic Harness",
+    "files": ["app/**/*", "setup/**/*", "harness/**/*", "skills/**/*", "package.json"],
+    "mac": { "category": "public.app-category.productivity", "icon": "app/build/icon.png", "target": ["dmg"] },
+    "win": { "icon": "app/build/icon.png", "target": ["nsis"] }
+  }
+}

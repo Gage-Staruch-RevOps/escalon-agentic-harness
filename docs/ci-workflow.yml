@@ -1,0 +1,25 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Nothing personal or secret in the repo
+        run: node scripts/check-repo.mjs
+      - name: Install for a test user (no library)
+        run: |
+          export HOME="$RUNNER_TEMP/home" && mkdir -p "$HOME"
+          printf 'CI User\nCompany\nTester\nQA\n\nUTC\nRuns checks.\n\nn\n' | node setup/setup.mjs
+          node "$HOME/.claude/harness/bin/test-route.mjs"
+          node "$HOME/.claude/harness/bin/lint-skills.mjs"
+          grep -q "You work for CI User" "$HOME/.claude/CLAUDE.md"
+          ! grep -n "{{" "$HOME/.claude/CLAUDE.md"
